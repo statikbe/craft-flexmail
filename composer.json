@@ -1,0 +1,40 @@
+{
+    "name": "statikbe/craft-flexmail",
+    "description": "Flexmail integration for Craft CMS",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "flexmail"
+    ],
+    "support": {
+        "docs": "https://github.com/statikbe/craft-flexmail/blob/main/README.md",
+        "issues": "https://github.com/statikbe/craft-flexmail/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Statik",
+            "homepage": "https://www.statik.be"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.7.0"
+    },
+    "autoload": {
+        "psr-4": {
+          "statikbe\\flexmail\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Flexmail",
+        "handle": "flexmail",
+        "hasCpSettings": true,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/statikbe/craft-flexmail/main/CHANGELOG.md",
+        "class": "statikbe\\flexmail\\Flexmail"
+    }
+}
