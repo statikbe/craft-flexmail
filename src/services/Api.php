@@ -48,37 +48,15 @@ class Api extends Component
         return $this->sendRequest($this->baseUrl . "/account-contact-languages");
     }
 
-    public function createOrUpdateContact($email, $language, $source = null, $firstName = null, $lastName = null, $customFields = [])
+    /**
+     * @return array|mixed|void
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @link https://api.flexmail.eu/documentation/#get-/preferences
+     */
+    public function getPreferences()
     {
-//        TODO: Set default source in settings? Sources like lists?
-        $fields = [
-            'email' => $email,
-            'first_name' => $firstName ?? null,
-            'name' => $lastName ?? null,
-            'language' => $language,
-            'source' => (int)$source,
-            'custom_fields' => $customFields,
-        ];
-
-        $this->validateCustomFields($customFields);
-
-        $url = $this->baseUrl . "/contacts?" . http_build_query(['email' => $email]);
-        $response = $this->sendRequest($url);
-        if (!$response['data']) {
-            $body = Json::encode(array_filter($fields));
-            $response = $this->sendRequest($this->baseUrl . '/contacts', $body, "POST");
-        }
-
-        if (!$response['links']['item']) {
-            throw new BadResponseException("Resoucre not found");
-        }
-
-        $contact = $response['data'][0];
-        $payload = $this->parseContact($contact, $fields);
-        dd($payload);
-        $hier = $this->sendRequest($response['links']['item'], Json::encode($payload), "PUT");
-        dd($contact);
-
+        $url = $this->baseUrl . '/preferences';
+        return $this->sendRequest($url);
     }
 
     /**

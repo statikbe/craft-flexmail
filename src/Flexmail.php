@@ -11,6 +11,9 @@ namespace statikbe\flexmail;
 
 use Craft;
 use craft\base\Plugin;
+use craft\events\RegisterComponentTypesEvent;
+use craft\services\Fields;
+use statikbe\flexmail\fields\FlexmailPreferencesField;
 use statikbe\flexmail\services\Api;
 use statikbe\flexmail\services\Contact;
 use yii\base\Event;
@@ -48,6 +51,14 @@ class Flexmail extends Plugin
     {
         parent::init();
         self::$plugin = $this;
+
+        Event::on(
+            Fields::class,
+            Fields::EVENT_REGISTER_FIELD_TYPES,
+            function(RegisterComponentTypesEvent $event) {
+                $event->types[] = FlexmailPreferencesField::class;
+            }
+        );
 
         $this->setComponents([
             'api' => Api::class,
