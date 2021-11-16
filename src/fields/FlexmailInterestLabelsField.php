@@ -6,7 +6,7 @@ use craft\fields\Dropdown;
 use Craft;
 use statikbe\flexmail\Flexmail;
 
-class FlexmailPreferencesField extends Dropdown
+class FlexmailInterestLabelsField extends Dropdown
 {
 
     /**
@@ -16,16 +16,16 @@ class FlexmailPreferencesField extends Dropdown
 
     public static function displayName(): string
     {
-        return Craft::t('flexmail', 'Flexmail Preferences');
+        return Craft::t('flexmail', 'Flexmail Interest Labels');
     }
 
     protected function options(): array
     {
 
-        $preferences = Flexmail::getInstance()->api->getPreferences();
+        $preferences = Flexmail::getInstance()->api->getInterestLabels();
         $data = [];
         $data[0]['value'] = '';
-        $data[0]['label'] = Craft::t('flexmail', 'Select a preference group');
+        $data[0]['label'] = Craft::t('flexmail', 'Select an interest label');
         foreach ($preferences['data'] as $i) {
             $data[$i['id']]['value'] = $i['id'];
             $data[$i['id']]['label'] = $i['label'];
@@ -37,5 +37,4 @@ class FlexmailPreferencesField extends Dropdown
     {
         return false;
     }
-
 }

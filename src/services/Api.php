@@ -62,6 +62,17 @@ class Api extends Component
     /**
      * @return array|mixed|void
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @link https://api.flexmail.eu/documentation/#get-/interest-labels
+     */
+    public function getInterestLabels()
+    {
+        $url = $this->baseUrl . '/interest-labels';
+        return $this->sendRequest($url);
+    }
+
+    /**
+     * @return array|mixed|void
+     * @throws \Psr\Http\Client\ClientExceptionInterface
      * @link https://api.flexmail.eu/documentation/#get-/sources
      */
     public function getSources()

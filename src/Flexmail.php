@@ -13,6 +13,7 @@ use Craft;
 use craft\base\Plugin;
 use craft\events\RegisterComponentTypesEvent;
 use craft\services\Fields;
+use statikbe\flexmail\fields\FlexmailInterestLabelsField;
 use statikbe\flexmail\fields\FlexmailPreferencesField;
 use statikbe\flexmail\services\Api;
 use statikbe\flexmail\services\Contact;
@@ -57,6 +58,7 @@ class Flexmail extends Plugin
             Fields::EVENT_REGISTER_FIELD_TYPES,
             function(RegisterComponentTypesEvent $event) {
                 $event->types[] = FlexmailPreferencesField::class;
+                $event->types[] = FlexmailInterestLabelsField::class;
             }
         );
 
