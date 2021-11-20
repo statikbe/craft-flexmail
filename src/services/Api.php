@@ -46,10 +46,29 @@ class Api extends Component
      * @throws \Psr\Http\Client\ClientExceptionInterface
      * @link https://api.flexmail.eu/documentation/#get-/contacts
      */
-    public function getContact($email)
+    public function searchContactByEmail($email)
     {
         $url = $this->baseUrl . "/contacts?" . http_build_query(['email' => $email]);
         return $this->sendRequest($url);
+    }
+
+    /**
+     * @param $data
+     * @return mixed
+     * @link https://api.flexmail.eu/documentation/#post-/contacts
+     */
+    public function addContact($data)
+    {
+        return $this->sendRequest($this->baseUrl . '/contacts', $data, "POST");
+    }
+
+
+    /**
+     * @link https://api.flexmail.eu/documentation/#put-/contacts/-id-
+     */
+    public function updateContact($link, $data)
+    {
+        return $this->sendRequest($link, $data, "PUT");
     }
 
     /**
@@ -94,6 +113,18 @@ class Api extends Component
         return $this->sendRequest($url);
     }
 
+    public function addInterestLabelToContact($contact, $labels)
+    {
+        foreach ($labels as $label) {
+            $body = [
+                'contact_id' => (int)$contact['id'],
+                'interest_label_id' => (int)$label
+            ];
+            $response = $this->sendRequest($this->baseUrl . '/contact-interest-label-subscriptions', Json::encode($body), "POST");
+        }
+
+    }
+
 
     /**
      * @param string $uri
@@ -124,6 +155,8 @@ class Api extends Component
                     'data' => Json::decodeIfJson($data),
                     'links' => $this->parseLinks($parsed),
                 ];
+            } else {
+                throw new ClientException($response->getReasonPhrase());
             }
         } catch (ClientException $e) {
             \Craft::error($e->getMessage(), 'flexmail');

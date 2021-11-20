@@ -9,9 +9,14 @@ use statikbe\flexmail\Flexmail;
 
 class Contact extends Component
 {
+    /**
+     * @var Api
+     */
     public $api;
 
     private $baseUrl = 'https://api.flexmail.eu';
+
+    private $contact;
 
 
     public function init()
@@ -33,23 +38,35 @@ class Contact extends Component
             'custom_fields' => $customFields,
         ];
 
-        $response = $this->api->getContact($email);
+        $response = $this->api->searchContactByEmail($email);
+
 
         if (!$response['data']) {
             $body = Json::encode(array_filter($fields));
-            $response = $this->api->sendRequest($this->baseUrl . '/contacts', $body, "POST");
+            $response = $this->api->addContact($body);
+            if(!$response['data']) {
+                $response = $this->api->searchContactByEmail($email);
+            }
+            $this->contact = $response['data'][0];
+        } else {
+            $this->contact = $response['data'][0];
         }
 
-        if (!$response['links']['item']) {
+
+        if (!$this->contact) {
             throw new BadResponseException("Resoucre not found");
         }
 
-        $contact = $response['data'][0];
-        $payload = $this->parseContact($contact, $fields);
-        $hier = $this->api->sendRequest($response['links']['item'], Json::encode($payload), "PUT");
+
+        $payload = $this->parseContact($this->contact, $fields);
+        $response = $this->api->updateContact($response['links']['item'], Json::encode($payload));
 
 
         // TODO preferences
+
+        if($labels) {
+            $this->api->addInterestLabelToContact($this->contact, $labels);
+        }
 
         // TODO interest-labels
 
