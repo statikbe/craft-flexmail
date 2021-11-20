@@ -20,7 +20,8 @@ class Contact extends Component
     }
 
 
-    public function createOrUpdateContact($email, $language, $source = null, $firstName = null, $lastName = null, $customFields = [])
+
+    public function createOrUpdateContact($email, $language, $source = null, $firstName = null, $lastName = null, $customFields = [], $labels = [])
     {
 //        TODO: Set default source in settings? Sources like lists?
         $fields = [
@@ -32,10 +33,8 @@ class Contact extends Component
             'custom_fields' => $customFields,
         ];
 
-//        $this->validateCustomFields($customFields);
+        $response = $this->api->getContact($email);
 
-        $url = $this->baseUrl . "/contacts?" . http_build_query(['email' => $email]);
-        $response = $this->api->sendRequest($url);
         if (!$response['data']) {
             $body = Json::encode(array_filter($fields));
             $response = $this->api->sendRequest($this->baseUrl . '/contacts', $body, "POST");

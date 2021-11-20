@@ -22,13 +22,13 @@ class FlexmailInterestLabelsField extends Dropdown
     protected function options(): array
     {
 
-        $preferences = Flexmail::getInstance()->api->getInterestLabels();
+        $labels = Flexmail::getInstance()->api->getInterestLabels();
         $data = [];
         $data[0]['value'] = '';
         $data[0]['label'] = Craft::t('flexmail', 'Select an interest label');
-        foreach ($preferences['data'] as $i) {
+        foreach ($labels['data'] as $i) {
             $data[$i['id']]['value'] = $i['id'];
-            $data[$i['id']]['label'] = $i['label'];
+            $data[$i['id']]['label'] = $i['name'];
         }
         return $data;
     }

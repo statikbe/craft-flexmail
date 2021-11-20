@@ -22,6 +22,8 @@ class ContactsController extends Controller
         $language = $request->getBodyParam('language', 'en');
         $source = $request->getValidatedBodyParam('source', null);
         $fields = $request->getBodyParam('fields', []);
+        $labels = $request->getBodyParam('labels', []);
+
 
         // Pass to service
         $preferences = $request->getBodyParam('preferences', []);
@@ -33,7 +35,8 @@ class ContactsController extends Controller
                 $source,
                 $firstName,
                 $lastName,
-                $fields
+                $fields,
+                $labels
             );
             if ($request->isJson) {
                 return $this->asJson([

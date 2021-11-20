@@ -39,6 +39,19 @@ class Api extends Component
         $this->token = getenv('FLEX_TOKEN');
     }
 
+
+    /**
+     * @param $email
+     * @return array|mixed|void
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @link https://api.flexmail.eu/documentation/#get-/contacts
+     */
+    public function getContact($email)
+    {
+        $url = $this->baseUrl . "/contacts?" . http_build_query(['email' => $email]);
+        return $this->sendRequest($url);
+    }
+
     /**
      * @return array|null
      * @link https://api.flexmail.eu/documentation/#get-/account-contact-languages
