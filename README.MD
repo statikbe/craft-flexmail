@@ -52,6 +52,8 @@ By default, a contact in Flexmail has the following fields ([API docs](flexmail)
 `````
 
 ### Subscribe form with custom fields
+Flexmail custom fields can be added in the ``fields`` namespace. 
+For example ``fields[city]``, where "city" is the handle of the custom field in Flexmail.
 
 `````html
  <form method="post">
@@ -64,7 +66,6 @@ By default, a contact in Flexmail has the following fields ([API docs](flexmail)
 
         <div>
             <label for="custom">Your organisation</label>
-            {# Flexmail custom fields can be use like below, in the 'fields' namespace, followed by the name of the field in Flexmail #}
             <input type="text" name="fields[organisation]" id="custom">
         </div>
         <input type="submit" value="Subscribe">
