@@ -23,18 +23,18 @@ class ContactsController extends Controller
 
         $language = $request->getBodyParam('language', $this->parseLocale());
         $source = $request->getValidatedBodyParam('source', '');
-        if(!$source) {
+        if (!$source) {
             $source = Flexmail::getInstance()->getSettings()->defaultSource;
         }
 
-        if(!$source) {
+        if (!$source) {
             throw new InvalidConfigException("Flexmail source not defined");
         }
 
         $fields = $request->getBodyParam('fields', []);
         $labels = $request->getBodyParam('labels', []);
         $preferences = $request->getBodyParam('preferences', []);
-        
+
         try {
             $response = Flexmail::$plugin->contact->createOrUpdateContact(
                 $email,
@@ -73,7 +73,8 @@ class ContactsController extends Controller
         }
     }
 
-    private function parseLocale() {
+    private function parseLocale()
+    {
         $locale = Craft::$app->getSites()->getCurrentSite()->language;
         $str = explode('-', $locale);
         return $str[0];

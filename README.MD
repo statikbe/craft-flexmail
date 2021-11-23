@@ -12,6 +12,14 @@ composer require statikbe/craft-flexmail
 ./craft  plugin/install flexmail
 ```
 
+## Settings
+The plugin has the following settings:
+- API username (`apiUsername`)
+- API token (`apiToken`)
+- Default contact source (`defaultSource`) (read more about Flexmail sources [here](https://en.support.flexmail.eu/article/291-about-sources))
+
+The default contact source can be set in settings, or you can set in template using a hidden ``source`` field.
+
 ## Usage
 
 By default, a contact in Flexmail has the following fields ([API docs](flexmail)):
