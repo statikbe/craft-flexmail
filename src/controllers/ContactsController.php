@@ -6,6 +6,7 @@ use craft\web\Controller;
 use Craft;
 use statikbe\flexmail\Flexmail;
 use yii\base\Exception;
+use yii\base\InvalidConfigException;
 
 class ContactsController extends Controller
 {
@@ -13,6 +14,8 @@ class ContactsController extends Controller
 
     public function actionAdd()
     {
+        $this->verifySettings();
+
         $request = Craft::$app->getRequest();
         $email = $request->getRequiredBodyParam('email');
         $firstName = $request->getBodyParam('firstName', null);
@@ -55,5 +58,14 @@ class ContactsController extends Controller
             }
         }
 
+    }
+
+    private function verifySettings()
+    {
+        $username = Flexmail::getInstance()->getSettings()->apiUsername;
+        $token = Flexmail::getInstance()->getSettings()->apiToken;
+        if (!$username || !$token) {
+            throw new InvalidConfigException("API credentials not set");
+        }
     }
 }
