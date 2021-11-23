@@ -10,7 +10,9 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Header;
 use GuzzleHttp\Psr7\Request;
+use statikbe\flexmail\Flexmail;
 use statikbe\flexmail\models\Contact;
+use Craft;
 
 class Api extends Component
 {
@@ -35,8 +37,8 @@ class Api extends Component
 
     public function init()
     {
-        $this->username = getenv('FLEX_USER');
-        $this->token = getenv('FLEX_TOKEN');
+        $this->username = Craft::parseEnv(Flexmail::getInstance()->getSettings()->apiUsername);
+        $this->token = Craft::parseEnv(Flexmail::getInstance()->getSettings()->apiToken);
     }
 
 

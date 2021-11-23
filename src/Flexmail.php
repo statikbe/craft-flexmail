@@ -15,6 +15,7 @@ use craft\events\RegisterComponentTypesEvent;
 use craft\services\Fields;
 use statikbe\flexmail\fields\FlexmailInterestLabelsField;
 use statikbe\flexmail\fields\FlexmailPreferencesField;
+use statikbe\flexmail\models\Settings;
 use statikbe\flexmail\services\Api;
 use statikbe\flexmail\services\Contact;
 use yii\base\Event;
@@ -66,5 +67,27 @@ class Flexmail extends Plugin
             'api' => Api::class,
             'contact' => Contact::class,
         ]);
+    }
+
+    // Protected Methods
+    // =========================================================================
+    protected function createSettingsModel()
+    {
+        return new Settings();
+    }
+
+    protected function settingsHtml(): string
+    {
+        if(Craft::parseEnv(Flexmail::getInstance()->getSettings()->apiToken) && Craft::parseEnv(Flexmail::getInstance()->getSettings()->apiUsername)) {
+            $sources = Flexmail::getInstance()->api->getSources();
+        }
+
+        return Craft::$app->view->renderTemplate(
+            'flexmail/settings',
+            [
+                'settings' => $this->getSettings(),
+                'sources' => $sources['data'] ?? []
+            ]
+        );
     }
 }
