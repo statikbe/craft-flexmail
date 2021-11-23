@@ -21,16 +21,20 @@ class ContactsController extends Controller
         $firstName = $request->getBodyParam('firstName', null);
         $lastName = $request->getBodyParam('lastName', null);
 
-        // TODO: Set language to Flexmail account default if not available?
-        $language = $request->getBodyParam('language', 'en');
-        $source = $request->getValidatedBodyParam('source', null);
+        $language = $request->getBodyParam('language', $this->parseLocale());
+        $source = $request->getValidatedBodyParam('source', '');
+        if(!$source) {
+            $source = Flexmail::getInstance()->getSettings()->defaultSource;
+        }
+
+        if(!$source) {
+            throw new InvalidConfigException("Flexmail source not defined");
+        }
+
         $fields = $request->getBodyParam('fields', []);
         $labels = $request->getBodyParam('labels', []);
-
-
-        // Pass to service
         $preferences = $request->getBodyParam('preferences', []);
-
+        
         try {
             $response = Flexmail::$plugin->contact->createOrUpdateContact(
                 $email,
@@ -65,7 +69,13 @@ class ContactsController extends Controller
         $username = Flexmail::getInstance()->getSettings()->apiUsername;
         $token = Flexmail::getInstance()->getSettings()->apiToken;
         if (!$username || !$token) {
-            throw new InvalidConfigException("API credentials not set");
+            throw new InvalidConfigException("Flexmail API credentials not set");
         }
+    }
+
+    private function parseLocale() {
+        $locale = Craft::$app->getSites()->getCurrentSite()->language;
+        $str = explode('-', $locale);
+        return $str[0];
     }
 }
