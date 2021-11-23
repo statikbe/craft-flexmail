@@ -29,6 +29,44 @@ By default, a contact in Flexmail has the following fields ([API docs](flexmail)
 - Language (required)
 
 
+### Basic subscribe form
+`````html
+ <form method="post">
+    {{ actionInput('flexmail/contacts/add') }}
+    {{ csrfInput() }}
+    <div>
+        <label for="email">E-mail</label>
+        <input type="email" name="email" id="email">
+    </div>
+    <div>
+        <label for="firstName">First name</label>
+        <input type="text" name="firstName" id="firstName">
+    </div>
+    <div>
+        <label for="lastName">Last name</label>
+        <input type="text" name="lastName" id="lastName">
+    </div>
+    <input type="submit" value="Subscribe">
+</form>
 
-## Basic subscribe form
+`````
 
+### Subscribe form with custom fields
+
+`````html
+ <form method="post">
+        {{ actionInput('flexmail/contacts/add') }}
+        {{ csrfInput() }}
+        <div>
+            <label for="email">E-mail</label>
+            <input type="email" name="email" id="email">
+        </div>
+
+        <div>
+            <label for="custom">Your organisation</label>
+            {# Flexmail custom fields can be use like below, in the 'fields' namespace, followed by the name of the field in Flexmail #}
+            <input type="text" name="fields[organisation]" id="custom">
+        </div>
+        <input type="submit" value="Subscribe">
+    </form>
+`````
