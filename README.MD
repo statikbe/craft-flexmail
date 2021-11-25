@@ -71,3 +71,27 @@ For example ``fields[city]``, where "city" is the handle of the custom field in 
         <input type="submit" value="Subscribe">
     </form>
 `````
+
+### Subscribe form with preferences and/or interest labels
+Flexmail is 2 ways to segment or add metadata to contacts: interest labels & preferences.
+These can be added by using ``labels[]`` and ``preferencs[]`` respectivly. 
+
+It's important to note that the values for these need to be **the ID of that item in Flexmail**.
+
+`````html
+ <form method="post">
+        {{ actionInput('flexmail/contacts/add') }}
+        {{ csrfInput() }}
+        <div>
+            <label for="email">E-mail</label>
+            <input type="email" name="email" id="email">
+        </div>
+    
+        // Interest label
+        <input type="checkbox" name="labels[]" value="labelId">
+        // Preference
+        <input type="checkbox" name="preferences[]" value="preferenceId">
+    
+        <input type="submit" value="Subscribe">
+    </form>
+`````

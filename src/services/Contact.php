@@ -26,7 +26,7 @@ class Contact extends Component
 
 
 
-    public function createOrUpdateContact($email, $language, $source = null, $firstName = null, $lastName = null, $customFields = [], $labels = [])
+    public function createOrUpdateContact($email, $language, $source = null, $firstName = null, $lastName = null, $customFields = [], $labels = [], $preferences = [])
     {
 //        TODO: Set default source in settings? Sources like lists?
         $fields = [
@@ -62,10 +62,13 @@ class Contact extends Component
         $response = $this->api->updateContact($response['links']['item'], Json::encode($payload));
 
 
-        // TODO preferences
 
         if($labels) {
-            $this->api->addInterestLabelToContact($this->contact, $labels);
+            $this->api->addInterestLabelsToContact($this->contact, $labels);
+        }
+
+        if($preferences) {
+            $this->api->addPreferencesToContact($this->contact, $preferences);
         }
 
         // TODO interest-labels

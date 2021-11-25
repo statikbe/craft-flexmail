@@ -43,7 +43,8 @@ class ContactsController extends Controller
                 $firstName,
                 $lastName,
                 $fields,
-                $labels
+                $labels,
+                $preferences
             );
             if ($request->isJson) {
                 return $this->asJson([

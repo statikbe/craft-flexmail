@@ -114,7 +114,14 @@ class Api extends Component
         return $this->sendRequest($url);
     }
 
-    public function addInterestLabelToContact($contact, $labels)
+
+    /**
+     * @param $contact
+     * @param array $labels
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @link https://api.flexmail.eu/documentation/#post-/contact-interest-label-subscriptions
+     */
+    public function addInterestLabelsToContact($contact, $labels = [])
     {
         foreach ($labels as $label) {
             try {
@@ -125,12 +132,37 @@ class Api extends Component
             ];
             $response = $this->sendRequest($this->baseUrl . '/contact-interest-label-subscriptions', Json::encode($body), "POST");
             } catch (\Exception $e) {
+                // Flexmail throws a 409 when the contact already has the label we're trying to add so we're moving along when that happens
                 if(!$e->getResponse()->getStatusCode() === 409) {
                     throw $e;
                 }
             }
         }
+    }
 
+    /**
+     * @param $contact
+     * @param array $labels
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @link https://api.flexmail.eu/documentation/#post-/contact-preference-subscriptions
+     */
+    public function addPreferencesToContact($contact, $labels = [])
+    {
+        foreach ($labels as $label) {
+            try {
+
+                $body = [
+                    'contact_id' => (int)$contact['id'],
+                    'preference_id' => (int)$label
+                ];
+                $response = $this->sendRequest($this->baseUrl . '/contact-preference-subscriptions', Json::encode($body), "POST");
+            } catch (\Exception $e) {
+                // Flexmail throws a 409 when the contact already has the preference we're trying to add so we're moving along when that happens
+                if(!$e->getResponse()->getStatusCode() === 409) {
+                    throw $e;
+                }
+            }
+        }
     }
 
 
