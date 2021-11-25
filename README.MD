@@ -95,3 +95,19 @@ It's important to note that the values for these need to be **the ID of that ite
         <input type="submit" value="Subscribe">
     </form>
 `````
+
+## Fields
+
+The plugin includes fields for the labels and for the preferences that are defined in your Flexmail account.
+
+The idea here is that you can create a label or a preference for contacts that subscribe from a specific page/product/etc.
+
+## Helpers
+
+Flexmail uses ID's for most things (sources, labels, preferences) but those ID's are not exposed in the webpages.
+
+You can use these console command to list each of these, they will return all items with their ID and label
+
+    flexmail/debug/get-interest-labels
+    flexmail/debug/get-preferences
+    flexmail/debug/get-sources
