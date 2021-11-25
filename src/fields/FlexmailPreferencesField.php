@@ -21,6 +21,7 @@ class FlexmailPreferencesField extends Dropdown
 
     protected function options(): array
     {
+        try {
 
         $preferences = Flexmail::getInstance()->api->getPreferences();
         $data = [];
@@ -31,6 +32,10 @@ class FlexmailPreferencesField extends Dropdown
             $data[$i['id']]['label'] = $i['label'];
         }
         return $data;
+        } catch (\Exception $e) {
+            Craft::error($e->getMessage());
+            return [];
+        }
     }
 
     public function getSettingsHtml()

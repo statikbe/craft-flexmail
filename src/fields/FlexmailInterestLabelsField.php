@@ -2,8 +2,8 @@
 
 namespace statikbe\flexmail\fields;
 
-use craft\fields\Dropdown;
 use Craft;
+use craft\fields\Dropdown;
 use statikbe\flexmail\Flexmail;
 
 class FlexmailInterestLabelsField extends Dropdown
@@ -21,16 +21,21 @@ class FlexmailInterestLabelsField extends Dropdown
 
     protected function options(): array
     {
+        try {
 
-        $labels = Flexmail::getInstance()->api->getInterestLabels();
-        $data = [];
-        $data[0]['value'] = '';
-        $data[0]['label'] = Craft::t('flexmail', 'Select an interest label');
-        foreach ($labels['data'] as $i) {
-            $data[$i['id']]['value'] = $i['id'];
-            $data[$i['id']]['label'] = $i['name'];
+            $labels = Flexmail::getInstance()->api->getInterestLabels();
+            $data = [];
+            $data[0]['value'] = '';
+            $data[0]['label'] = Craft::t('flexmail', 'Select an interest label');
+            foreach ($labels['data'] as $i) {
+                $data[$i['id']]['value'] = $i['id'];
+                $data[$i['id']]['label'] = $i['name'];
+            }
+            return $data;
+        } catch (\Exception $e) {
+            Craft::error($e->getMessage());
+            return [];
         }
-        return $data;
     }
 
     public function getSettingsHtml()
