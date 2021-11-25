@@ -117,11 +117,18 @@ class Api extends Component
     public function addInterestLabelToContact($contact, $labels)
     {
         foreach ($labels as $label) {
+            try {
+
             $body = [
                 'contact_id' => (int)$contact['id'],
                 'interest_label_id' => (int)$label
             ];
             $response = $this->sendRequest($this->baseUrl . '/contact-interest-label-subscriptions', Json::encode($body), "POST");
+            } catch (\Exception $e) {
+                if(!$e->getResponse()->getStatusCode() === 409) {
+                    throw $e;
+                }
+            }
         }
 
     }
