@@ -64,7 +64,6 @@ class Api extends Component
         return $this->sendRequest($this->baseUrl . '/contacts', $data, "POST");
     }
 
-
     /**
      * @link https://api.flexmail.eu/documentation/#put-/contacts/-id-
      */
@@ -135,7 +134,7 @@ class Api extends Component
      * @return mixed|void
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function sendRequest($url, $body = null, $method = "GET")
+    private function sendRequest($url, $body = null, $method = "GET")
     {
         try {
             $client = new Client();
@@ -158,10 +157,10 @@ class Api extends Component
                     'links' => $this->parseLinks($parsed),
                 ];
             } else {
-                throw new ClientException($response->getReasonPhrase());
+                throw new ClientException($response->getReasonPhrase(), $request, $response);
             }
         } catch (ClientException $e) {
-            \Craft::error($e->getMessage(), 'flexmail');
+            throw $e;
         }
     }
 

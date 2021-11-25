@@ -54,9 +54,9 @@ class ContactsController extends Controller
 
             return $this->redirectToPostedUrl();
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             if (Craft::$app->getConfig()->general->devMode) {
-                throw new Exception($e->getMessage());
+                throw $e;
             } else {
                 Craft::error($e->getMessage());
             }

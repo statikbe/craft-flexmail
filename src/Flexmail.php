@@ -57,7 +57,7 @@ class Flexmail extends Plugin
         Event::on(
             Fields::class,
             Fields::EVENT_REGISTER_FIELD_TYPES,
-            function(RegisterComponentTypesEvent $event) {
+            function (RegisterComponentTypesEvent $event) {
                 $event->types[] = FlexmailPreferencesField::class;
                 $event->types[] = FlexmailInterestLabelsField::class;
             }
@@ -78,16 +78,20 @@ class Flexmail extends Plugin
 
     protected function settingsHtml(): string
     {
-        if(Craft::parseEnv(Flexmail::getInstance()->getSettings()->apiToken) && Craft::parseEnv(Flexmail::getInstance()->getSettings()->apiUsername)) {
-            $sources = Flexmail::getInstance()->api->getSources();
+        $data = [
+            'settings' => $this->getSettings(),
+        ];
+
+        if (Craft::parseEnv(Flexmail::getInstance()->getSettings()->apiToken) && Craft::parseEnv(Flexmail::getInstance()->getSettings()->apiUsername)) {
+            try {
+                $sources = Flexmail::getInstance()->api->getSources();
+                $data['sources'] = $sources['data'];
+            } catch (\Exception $e) {
+                $data['statusCode'] = $e->getCode();
+                $data['status'] = $e->getMessage();
+            }
         }
 
-        return Craft::$app->view->renderTemplate(
-            'flexmail/settings',
-            [
-                'settings' => $this->getSettings(),
-                'sources' => $sources['data'] ?? []
-            ]
-        );
+        return Craft::$app->view->renderTemplate('flexmail/settings', $data);
     }
 }
