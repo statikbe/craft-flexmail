@@ -1,0 +1,54 @@
+{% import "_includes/forms" as forms %}
+
+{% if status is defined %}
+    <div class="readable">
+        <blockquote class="note"><p><strong>Unable to connect ({{ statusCode }}: {{ status }})</strong></p></blockquote>
+    </div><br>
+{% endif %}
+
+{{ forms.autosuggestField({
+    first: true,
+    label: 'Flexmail API username'|t('flexmail'),
+    id: 'apiUsername',
+    name: 'apiUsername',
+    value: settings['apiUsername'],
+    errors: settings.getErrors('apiUsername'),
+    suggestEnvVars: true,
+    suggestAliases: true,
+}) }}
+
+{{ forms.autosuggestField({
+    first: true,
+    label: 'Flexmail API private token'|t('flexmail'),
+    id: 'apiToken',
+    name: 'apiToken',
+    value: settings['apiToken'],
+    errors: settings.getErrors('apiToken'),
+    suggestEnvVars: true,
+    suggestAliases: true,
+}) }}
+
+{% if settings.apiToken and settings.apiUsername %}
+    {% if sources is defined %}
+
+        <hr>
+
+        {% set parsedSources = { '': '---'} %}
+        {% for source in sources %}
+            {% set parsedSources = parsedSources|merge([{
+                'label': source.name,
+                'value': source.id
+            }]) %}
+        {% endfor %}
+        {{ forms.selectField({
+            instructions: 'You can set a default source for all your forms here, or you can use a hidden field in your form the set a specific one. More about Flexmail sources <a href="https://en.support.flexmail.eu/article/291-about-sources" target="_blank">here</a>.'|t('flexmail'),
+            label: "Default contact source"|t('flexmail'),
+            id: "defaultSource",
+            name: "defaultSource",
+            options: parsedSources,
+            value: settings.defaultSource,
+            errors: errors is defined and errors.defaultSource is defined ? errors.defaultSource
+        }) }}
+
+    {% endif %}
+{% endif %}
