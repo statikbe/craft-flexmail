@@ -88,8 +88,16 @@ class Api extends Component
      */
     public function getPreferences()
     {
-        $url = $this->baseUrl . '/preferences';
-        return $this->sendRequest($url);
+
+        return Craft::$app->getCache()->getOrSet(
+            "plugin_flexmail_preferences",
+            function() {
+                $url = $this->baseUrl . '/preferences';
+                return $this->sendRequest($url);
+
+            },
+            216000
+        );
     }
 
     /**
@@ -99,8 +107,14 @@ class Api extends Component
      */
     public function getInterestLabels()
     {
-        $url = $this->baseUrl . '/interest-labels';
-        return $this->sendRequest($url);
+        return Craft::$app->getCache()->getOrSet(
+            "plugin_flexmail_interest_labels",
+            function() {
+                $url = $this->baseUrl . '/interest-labels';
+                return $this->sendRequest($url);
+            },
+            216000
+        );
     }
 
     /**
