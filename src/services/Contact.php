@@ -40,16 +40,15 @@ class Contact extends Component
 
         $response = $this->api->searchContactByEmail($email);
 
-
-        if (!$response['data']) {
+        if (!$response['data']['_embedded']) {
             $body = Json::encode(array_filter($fields));
             $response = $this->api->addContact($body);
             if(!$response['data']) {
                 $response = $this->api->searchContactByEmail($email);
             }
-            $this->contact = $response['data'][0];
+            $this->contact = $response['data']['_embedded']['item'][0];
         } else {
-            $this->contact = $response['data'][0];
+            $this->contact = $response['data']['_embedded']['item'][0];
         }
 
 
@@ -57,9 +56,8 @@ class Contact extends Component
             throw new BadResponseException("Resoucre not found");
         }
 
-
         $payload = $this->parseContact($this->contact, $fields);
-        $response = $this->api->updateContact($response['links']['item'], Json::encode($payload));
+        $response = $this->api->updateContact($response['data']['_links']['item'][0]['href'], Json::encode($payload));
 
 
 
