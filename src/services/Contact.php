@@ -40,7 +40,7 @@ class Contact extends Component
 
         $response = $this->api->searchContactByEmail($email);
 
-        if (!$response['data']['_embedded']) {
+        if (!isset($response['data']['_embedded'])) {
             $body = Json::encode(array_filter($fields));
             $response = $this->api->addContact($body);
             if(!$response['data']) {
