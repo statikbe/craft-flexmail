@@ -45,8 +45,8 @@ class Contact extends Component
             $response = $this->api->addContact($body);
             if(!$response['data']) {
                 $response = $this->api->searchContactByEmail($email);
+                $this->contact = $response['data']['_embedded']['item'][0];
             }
-            $this->contact = $response['data']['_embedded']['item'][0];
         } else {
             $this->contact = $response['data']['_embedded']['item'][0];
         }
