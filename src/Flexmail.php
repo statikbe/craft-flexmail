@@ -85,7 +85,7 @@ class Flexmail extends Plugin
         if (Craft::parseEnv(Flexmail::getInstance()->getSettings()->apiToken) && Craft::parseEnv(Flexmail::getInstance()->getSettings()->apiUsername)) {
             try {
                 $sources = Flexmail::getInstance()->api->getSources();
-                $data['sources'] = $sources['data'];
+                $data['sources'] = $sources['data']['_embedded']['item'];
             } catch (\Exception $e) {
                 $data['statusCode'] = $e->getCode();
                 $data['status'] = $e->getMessage();

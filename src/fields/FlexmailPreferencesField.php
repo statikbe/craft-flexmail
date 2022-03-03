@@ -27,7 +27,7 @@ class FlexmailPreferencesField extends Dropdown
         $data = [];
         $data[0]['value'] = '';
         $data[0]['label'] = Craft::t('flexmail', 'Select a preference group');
-        foreach ($preferences['data'] as $i) {
+        foreach ($preferences['data']['_embedded']['item'] as $i) {
             $data[$i['id']]['value'] = $i['id'];
             $data[$i['id']]['label'] = $i['label'];
         }

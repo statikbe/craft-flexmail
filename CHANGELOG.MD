@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## 1.0.5 - 2022-03-03
+### Fixed
+- Fixed response parsing caused by API changes
+
+
 ## 1.0.4 - 2022-03-03
 ### Fixed
 - Better check for excisting contacts
