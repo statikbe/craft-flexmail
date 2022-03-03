@@ -43,8 +43,10 @@ class Contact extends Component
         if (!isset($response['data']['_embedded'])) {
             $body = Json::encode(array_filter($fields));
             $response = $this->api->addContact($body);
-            if(!$response['data']) {
+            if(!isset($response['data']['_embedded'])) {
                 $response = $this->api->searchContactByEmail($email);
+                $this->contact = $response['data']['_embedded']['item'][0];
+            } else {
                 $this->contact = $response['data']['_embedded']['item'][0];
             }
         } else {
@@ -68,9 +70,6 @@ class Contact extends Component
         if($preferences) {
             $this->api->addPreferencesToContact($this->contact, $preferences);
         }
-
-        // TODO interest-labels
-
 
         return true;
     }
