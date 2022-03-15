@@ -10,6 +10,7 @@
 namespace statikbe\flexmail;
 
 use Craft;
+use craft\base\Model;
 use craft\base\Plugin;
 use craft\events\RegisterComponentTypesEvent;
 use craft\services\Fields;
@@ -41,7 +42,7 @@ class Flexmail extends Plugin
     /**
      * @var string
      */
-    public $schemaVersion = '1.0.0';
+    public string $schemaVersion = '1.0.0';
 
     // Public Methods
     // =========================================================================
@@ -71,7 +72,7 @@ class Flexmail extends Plugin
 
     // Protected Methods
     // =========================================================================
-    protected function createSettingsModel()
+    protected function createSettingsModel(): Model
     {
         return new Settings();
     }

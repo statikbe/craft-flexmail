@@ -12,7 +12,7 @@ class FlexmailPreferencesField extends Dropdown
     /**
      * @inheritdoc
      */
-    public $optgroups = false;
+    public bool $optgroups = false;
 
     public static function displayName(): string
     {
@@ -38,7 +38,7 @@ class FlexmailPreferencesField extends Dropdown
         }
     }
 
-    public function getSettingsHtml()
+    public function getSettingsHtml(): string
     {
         return false;
     }

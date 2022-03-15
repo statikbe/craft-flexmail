@@ -7,13 +7,13 @@ use craft\base\Model;
 
 class Settings extends Model
 {
-    public $apiUsername;
+    public string $apiUsername= '';
 
-    public $apiToken;
+    public string $apiToken = '';
 
-    public $defaultSource;
+    public int $defaultSource = 0;
 
-    public function rules()
+    public function rules(): array
     {
         $rules = parent::defineRules();
         $rules[] = [['apiUsername', 'apiToken'], 'required'];
