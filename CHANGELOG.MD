@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.0.6 - 2022-04-04
+### Fixed
+- Don't throw exception when status code is 409 Conflict
+- Link for updateContact
+
 
 ## 1.0.5 - 2022-03-03
 ### Fixed

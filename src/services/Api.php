@@ -210,7 +210,9 @@ class Api extends Component
                     'links' => $this->parseLinks($parsed),
                 ];
             } else {
-                throw new ClientException($response->getReasonPhrase(), $request, $response);
+                if($response->getStatusCode() != 409) {
+                    throw new ClientException($response->getReasonPhrase(), $request, $response);
+                }
             }
         } catch (ClientException $e) {
             throw $e;
