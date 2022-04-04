@@ -53,13 +53,12 @@ class Contact extends Component
             $this->contact = $response['data']['_embedded']['item'][0];
         }
 
-
         if (!$this->contact) {
-            throw new BadResponseException("Resoucre not found");
+            throw new BadResponseException("Resource not found");
         }
 
         $payload = $this->parseContact($this->contact, $fields);
-        $response = $this->api->updateContact($response['data']['_links']['item'][0]['href'], Json::encode($payload));
+        $response = $this->api->updateContact($this->baseUrl . $this->contact['_links']['self']['href'], Json::encode($payload));
 
 
 
