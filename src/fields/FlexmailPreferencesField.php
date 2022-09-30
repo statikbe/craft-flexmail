@@ -21,6 +21,7 @@ class FlexmailPreferencesField extends Dropdown
 
     protected function options(): array
     {
+        Craft::$app->deprecator->log("flexmail_preferences_field", "Preferences are deprecated in Flexmail. Please use Interests instead.", __CLASS__);
         try {
 
         $preferences = Flexmail::getInstance()->api->getPreferences();

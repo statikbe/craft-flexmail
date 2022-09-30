@@ -6,7 +6,7 @@ use Craft;
 use craft\fields\Dropdown;
 use statikbe\flexmail\Flexmail;
 
-class FlexmailInterestLabelsField extends Dropdown
+class FlexmailInterestsField extends Dropdown
 {
 
     /**
@@ -16,19 +16,17 @@ class FlexmailInterestLabelsField extends Dropdown
 
     public static function displayName(): string
     {
-        return Craft::t('flexmail', 'Flexmail Interest Labels');
+        return Craft::t('flexmail', 'Flexmail Interests');
     }
 
     protected function options(): array
     {
-        Craft::$app->deprecator->log("flexmail_interest_labels_field", "Interest Labels are deprecated in Flexmail. Please use Interests instead.", __CLASS__);
-
         try {
 
-            $labels = Flexmail::getInstance()->api->getInterestLabels();
+            $labels = Flexmail::getInstance()->api->getInterests();
             $data = [];
             $data[0]['value'] = '';
-            $data[0]['label'] = Craft::t('flexmail', 'Select an interest label');
+            $data[0]['label'] = Craft::t('flexmail', 'Select an interest');
             foreach ($labels['data']['_embedded']['item'] as $i) {
                 $data[$i['id']]['value'] = $i['id'];
                 $data[$i['id']]['label'] = $i['name'];

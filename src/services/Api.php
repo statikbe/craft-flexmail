@@ -121,6 +121,23 @@ class Api extends Component
     /**
      * @return array|mixed|void
      * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @link https://api.flexmail.eu/documentation/#get-/interests
+     */
+    public function getInterests()
+    {
+        return Craft::$app->getCache()->getOrSet(
+            "plugin_flexmail_interests",
+            function() {
+                $url = $this->baseUrl . '/interests';
+                return $this->sendRequest($url);
+            },
+            216000
+        );
+    }
+
+    /**
+     * @return array|mixed|void
+     * @throws \Psr\Http\Client\ClientExceptionInterface
      * @link https://api.flexmail.eu/documentation/#get-/sources
      */
     public function getSources()
