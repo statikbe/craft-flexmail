@@ -12,7 +12,7 @@ class FlexmailPreferencesField extends Dropdown
     /**
      * @inheritdoc
      */
-    public $optgroups = false;
+    public bool $optgroups = false;
 
     public static function displayName(): string
     {
@@ -21,6 +21,7 @@ class FlexmailPreferencesField extends Dropdown
 
     protected function options(): array
     {
+        Craft::$app->deprecator->log("flexmail_preferences_field", "Preferences are deprecated in Flexmail. Please use Interests instead.", __CLASS__);
         try {
 
         $preferences = Flexmail::getInstance()->api->getPreferences();
@@ -38,7 +39,7 @@ class FlexmailPreferencesField extends Dropdown
         }
     }
 
-    public function getSettingsHtml()
+    public function getSettingsHtml(): string
     {
         return false;
     }

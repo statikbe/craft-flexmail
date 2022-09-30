@@ -16,6 +16,7 @@ class DebugController extends Controller
             $this->stdout(' - ', Console::FG_GREY);
             $this->stdout($i['name'] . PHP_EOL, Console::FG_CYAN);
         }
+        return true;
     }
 
     public function actionGetInterestLabels()
@@ -26,6 +27,7 @@ class DebugController extends Controller
             $this->stdout(' - ', Console::FG_GREY);
             $this->stdout($i['name'] . PHP_EOL, Console::FG_CYAN);
         }
+        return true;
     }
 
     public function actionGetPreferences()
@@ -36,5 +38,6 @@ class DebugController extends Controller
             $this->stdout(' - ', Console::FG_GREY);
             $this->stdout($i['title'] .  PHP_EOL, Console::FG_CYAN);
         }
+        return true;
     }
 }
