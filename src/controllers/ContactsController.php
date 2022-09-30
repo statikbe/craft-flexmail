@@ -10,7 +10,7 @@ use yii\base\InvalidConfigException;
 
 class ContactsController extends Controller
 {
-    protected $allowAnonymous = true;
+    protected bool|array|int $allowAnonymous = true;
 
     public function actionAdd()
     {

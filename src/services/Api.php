@@ -3,6 +3,7 @@
 namespace statikbe\flexmail\services;
 
 use craft\base\Component;
+use craft\helpers\App;
 use craft\helpers\Json;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
@@ -21,24 +22,24 @@ class Api extends Component
      * Your flexmail API username
      * @var string
      */
-    private $username;
+    private string $username;
 
     /**
      * Your flexmail API password (also called private token)
      * @var string
      */
-    private $token;
+    private string $token;
 
     /**
      * Base url for the current flexmail API endpoint
      * @var string
      */
-    private $baseUrl = 'https://api.flexmail.eu';
+    private string $baseUrl = 'https://api.flexmail.eu';
 
-    public function init()
+    public function init(): void
     {
-        $this->username = Craft::parseEnv(Flexmail::getInstance()->getSettings()->apiUsername);
-        $this->token = Craft::parseEnv(Flexmail::getInstance()->getSettings()->apiToken);
+        $this->username = App::parseEnv(Flexmail::getInstance()->getSettings()->apiUsername);
+        $this->token = App::parseEnv(Flexmail::getInstance()->getSettings()->apiToken);
     }
 
 
@@ -111,6 +112,23 @@ class Api extends Component
             "plugin_flexmail_interest_labels",
             function() {
                 $url = $this->baseUrl . '/interest-labels';
+                return $this->sendRequest($url);
+            },
+            216000
+        );
+    }
+
+    /**
+     * @return array|mixed|void
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @link https://api.flexmail.eu/documentation/#get-/interests
+     */
+    public function getInterests()
+    {
+        return Craft::$app->getCache()->getOrSet(
+            "plugin_flexmail_interests",
+            function() {
+                $url = $this->baseUrl . '/interests';
                 return $this->sendRequest($url);
             },
             216000

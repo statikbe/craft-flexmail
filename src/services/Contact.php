@@ -14,12 +14,12 @@ class Contact extends Component
      */
     public $api;
 
-    private $baseUrl = 'https://api.flexmail.eu';
+    private string $baseUrl = 'https://api.flexmail.eu';
 
     private $contact;
 
 
-    public function init()
+    public function init(): void
     {
         $this->api = Flexmail::getInstance()->api;
     }
