@@ -26,7 +26,7 @@ class Contact extends Component
 
 
 
-    public function createOrUpdateContact($email, $language, $source = null, $firstName = null, $lastName = null, $customFields = [], $labels = [], $preferences = [])
+    public function createOrUpdateContact($email, $language, $source = null, $firstName = null, $lastName = null, $customFields = [], $interests = [], $labels = [], $preferences = [])
     {
 //        TODO: Set default source in settings? Sources like lists?
         $fields = [
@@ -60,7 +60,9 @@ class Contact extends Component
         $payload = $this->parseContact($this->contact, $fields);
         $response = $this->api->updateContact($this->baseUrl . $this->contact['_links']['self']['href'], Json::encode($payload));
 
-
+        if($interests) {
+            $this->api->addInterestsToContact($this->contact, $interests);
+        }
 
         if($labels) {
             $this->api->addInterestLabelsToContact($this->contact, $labels);

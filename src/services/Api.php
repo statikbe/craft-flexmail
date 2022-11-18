@@ -174,6 +174,29 @@ class Api extends Component
 
     /**
      * @param $contact
+     * @param array $interests
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @link https://api.flexmail.eu/documentation/#post-/contacts/-id-/interest-subscriptions
+     */
+    public function addInterestsToContact($contact, $interests = [])
+    {
+        foreach ($interests as $interest) {
+            try {
+                $body = [
+                    'interest_id' => $interest
+                ];
+                $response = $this->sendRequest($this->baseUrl . '/contacts/' . $contact['id'] . '/interest-subscriptions', Json::encode($body), "POST");
+            } catch (\Exception $e) {
+                // Flexmail throws a 409 when the contact already has the label we're trying to add so we're moving along when that happens
+                if(!$e->getResponse()->getStatusCode() === 409) {
+                    throw $e;
+                }
+            }
+        }
+    }
+
+    /**
+     * @param $contact
      * @param array $labels
      * @throws \Psr\Http\Client\ClientExceptionInterface
      * @link https://api.flexmail.eu/documentation/#post-/contact-preference-subscriptions
