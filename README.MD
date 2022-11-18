@@ -86,7 +86,9 @@ It's important to note that the values for these need to be **the ID of that ite
             <label for="email">E-mail</label>
             <input type="email" name="email" id="email">
         </div>
-    
+
+        // Interests
+        <input type="checkbox" name="interests[]" value="interestId">
         // Interest label
         <input type="checkbox" name="labels[]" value="labelId">
         // Preference

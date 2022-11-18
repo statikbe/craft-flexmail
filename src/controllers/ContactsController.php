@@ -32,6 +32,7 @@ class ContactsController extends Controller
         }
 
         $fields = $request->getBodyParam('fields', []);
+        $interests = $request->getBodyParam('interests', []);
         $labels = $request->getBodyParam('labels', []);
         $preferences = $request->getBodyParam('preferences', []);
 
@@ -43,6 +44,7 @@ class ContactsController extends Controller
                 $firstName,
                 $lastName,
                 $fields,
+                $interests,
                 $labels,
                 $preferences
             );
