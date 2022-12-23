@@ -86,6 +86,7 @@ class Api extends Component
      * @return array|mixed|void
      * @throws \Psr\Http\Client\ClientExceptionInterface
      * @link https://api.flexmail.eu/documentation/#get-/preferences
+     * @deprecated 3.0.0 Flexmail no longer supports using preferences, please switch to using Interests
      */
     public function getPreferences()
     {
@@ -105,6 +106,7 @@ class Api extends Component
      * @return array|mixed|void
      * @throws \Psr\Http\Client\ClientExceptionInterface
      * @link https://api.flexmail.eu/documentation/#get-/interest-labels
+     * @deprecated 3.0.0 Flexmail no longer supports using preferences, please switch to using Interests
      */
     public function getInterestLabels()
     {
@@ -152,6 +154,8 @@ class Api extends Component
      * @param array $labels
      * @throws \Psr\Http\Client\ClientExceptionInterface
      * @link https://api.flexmail.eu/documentation/#post-/contact-interest-label-subscriptions
+     * @deprecated 3.0.0 Flexmail no longer supports using preferences, please switch to using Interests
+
      */
     public function addInterestLabelsToContact($contact, $labels = [])
     {
@@ -200,6 +204,7 @@ class Api extends Component
      * @param array $labels
      * @throws \Psr\Http\Client\ClientExceptionInterface
      * @link https://api.flexmail.eu/documentation/#post-/contact-preference-subscriptions
+     * @deprecated 3.0.0 Flexmail no longer supports using preferences, please switch to using Interests
      */
     public function addPreferencesToContact($contact, $labels = [])
     {
