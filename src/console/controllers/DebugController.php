@@ -19,9 +19,9 @@ class DebugController extends Controller
         return true;
     }
 
-    public function actionGetInterestLabels()
+    public function actionGetInterests()
     {
-        $response = Flexmail::getInstance()->api->getInterestLabels();
+        $response = Flexmail::getInstance()->api->getInterests();
         foreach ($response['data']['_embedded']['item'] as $i) {
             $this->stdout($i['id']);
             $this->stdout(' - ', Console::FG_GREY);
@@ -30,14 +30,4 @@ class DebugController extends Controller
         return true;
     }
 
-    public function actionGetPreferences()
-    {
-        $response = Flexmail::getInstance()->api->getPreferences();
-        foreach ($response['data']['_embedded']['item'] as $i) {
-            $this->stdout($i['id']);
-            $this->stdout(' - ', Console::FG_GREY);
-            $this->stdout($i['title'] .  PHP_EOL, Console::FG_CYAN);
-        }
-        return true;
-    }
 }

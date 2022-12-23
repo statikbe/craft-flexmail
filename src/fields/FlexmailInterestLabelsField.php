@@ -6,6 +6,9 @@ use Craft;
 use craft\fields\Dropdown;
 use statikbe\flexmail\Flexmail;
 
+/**
+ * @deprecated 3.0.0 Flexmail no longer supports using preferences, please switch to using Interests
+ */
 class FlexmailInterestLabelsField extends Dropdown
 {
 
