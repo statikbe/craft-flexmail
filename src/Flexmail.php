@@ -14,18 +14,22 @@ use craft\base\Model;
 use craft\base\Plugin;
 use craft\events\RegisterComponentTypesEvent;
 use craft\services\Fields;
+use craft\services\Utilities;
 use statikbe\flexmail\fields\FlexmailInterestLabelsField;
 use statikbe\flexmail\fields\FlexmailInterestsField;
 use statikbe\flexmail\fields\FlexmailPreferencesField;
 use statikbe\flexmail\models\Settings;
 use statikbe\flexmail\services\Api;
 use statikbe\flexmail\services\Contact;
+use statikbe\flexmail\services\Interests;
+use statikbe\flexmail\utilities\FlexmailUtility;
 use yii\base\Event;
 
 /**
  *
  * @property Api api
  * @property Contact contact
+ * @property Interests interests
  */
 class Flexmail extends Plugin
 {
@@ -43,7 +47,7 @@ class Flexmail extends Plugin
     /**
      * @var string
      */
-    public string $schemaVersion = '1.0.0';
+    public string $schemaVersion = '2.0.0';
 
     // Public Methods
     // =========================================================================
@@ -66,9 +70,16 @@ class Flexmail extends Plugin
             }
         );
 
+        Event::on(Utilities::class, Utilities::EVENT_REGISTER_UTILITY_TYPES,
+            function(RegisterComponentTypesEvent $event) {
+                $event->types[] = FlexmailUtility::class;
+            }
+        );
+
         $this->setComponents([
             'api' => Api::class,
             'contact' => Contact::class,
+            'interests' => Interests::class
         ]);
     }
 

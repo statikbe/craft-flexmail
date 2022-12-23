@@ -1,0 +1,22 @@
+{% import '_includes/forms' as forms %}
+
+<h2>{{ "Available interests" }}</h2>
+<p>{{ "If you recently added a new interest in Flexmail and you don't see it here, please click the 'Refresh' button below to start a new synchronisation"|t }}</p>
+<table class="data fullwidth fixed-layout" dir="ltr">
+    <tbody>
+    {% for row in interests %}
+        <tr>
+            <th class="light">{{ row.label }}</th>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<hr>
+
+<form method="post">
+    {{ csrfInput() }}
+    {{ actionInput('flexmail/interests/refresh') }}
+    {{ redirectInput(craft.app.request.getUrl()) }}
+
+    <button class="btn submit">{{ "Refresh interests from Flexmail" }}</button>
+</form>
