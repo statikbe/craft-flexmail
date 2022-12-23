@@ -90,7 +90,7 @@ class Api extends Component
      */
     public function getPreferences()
     {
-
+        Craft::$app->getDeprecator()->log(__CLASS__ . 'addInterestLabelsToContact', "Flexmail no longer supports using preferences, please switch to using Interests");
         return Craft::$app->getCache()->getOrSet(
             "plugin_flexmail_preferences",
             function() {
@@ -110,6 +110,7 @@ class Api extends Component
      */
     public function getInterestLabels()
     {
+        Craft::$app->getDeprecator()->log(__CLASS__ . 'addInterestLabelsToContact', "Flexmail no longer supports using labels, please switch to using Interests");
         return Craft::$app->getCache()->getOrSet(
             "plugin_flexmail_interest_labels",
             function() {
@@ -159,6 +160,7 @@ class Api extends Component
      */
     public function addInterestLabelsToContact($contact, $labels = [])
     {
+        Craft::$app->getDeprecator()->log(__CLASS__ . 'addInterestLabelsToContact', "Flexmail no longer supports using labels, please switch to using Interests");
         foreach ($labels as $label) {
             try {
 
@@ -208,6 +210,7 @@ class Api extends Component
      */
     public function addPreferencesToContact($contact, $labels = [])
     {
+        Craft::$app->getDeprecator()->log(__CLASS__ . 'addInterestLabelsToContact', "Flexmail no longer supports using preferences, please switch to using Interests");
         foreach ($labels as $label) {
             try {
 
