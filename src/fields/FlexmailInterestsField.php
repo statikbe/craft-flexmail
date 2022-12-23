@@ -23,13 +23,13 @@ class FlexmailInterestsField extends Dropdown
     {
         try {
 
-            $labels = Flexmail::getInstance()->api->getInterests();
+            $labels = Flexmail::getInstance()->interests->getInterests();
             $data = [];
             $data[0]['value'] = '';
             $data[0]['label'] = Craft::t('flexmail', 'Select an interest');
-            foreach ($labels['data']['_embedded']['item'] as $i) {
-                $data[$i['id']]['value'] = $i['id'];
-                $data[$i['id']]['label'] = $i['name'];
+            foreach ($labels as $i) {
+                $data[$i['id']]['value'] = $i['uid'];
+                $data[$i['id']]['label'] = $i['label'];
             }
             return $data;
         } catch (\Exception $e) {
