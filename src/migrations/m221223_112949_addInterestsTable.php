@@ -25,7 +25,6 @@ class m221223_112949_addInterestsTable extends Migration
             'dateUpdated' => $this->dateTime()->notNull(),
         ]);
 
-        Flexmail::$plugin->interests->refresh();
         return true;
     }
 
