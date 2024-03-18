@@ -22,7 +22,7 @@ The default contact source can be set in settings, or you can set in template us
 
 ## Usage
 
-By default, a contact in Flexmail has the following fields ([API docs](flexmail)):
+By default, a contact in Flexmail has the following fields ([API docs](https://api.flexmail.eu/documentation/#post-/contacts)):
 - Email (required)
 - First name
 - Last name
@@ -95,6 +95,24 @@ It's important to note that the values for these need to be **the ID of that ite
 `````
 
 Interests can be imported and refresh from the API through a Utility.
+
+### Opt-in
+To use the double opt-in feature of Flexmail you should provide a ``optInFormId``. In your Flexmail account you need to create an [Opt-in form](https://app.flexmail.eu/forms/optin) and add this ID in a hidden field in the form.
+
+`````html
+ <form method="post">
+        {{ csrfInput() }}
+        {{ actionInput('flexmail/contacts/add') }}
+        {{ hiddenInput('optInFormId', 1234) }}
+    
+        <div>
+            <label for="email">E-mail</label>
+            <input type="email" name="email" id="email">
+        </div>
+
+        <input type="submit" value="Subscribe">
+    </form>
+`````
 
 ## Fields
 

@@ -74,6 +74,15 @@ class Api extends Component
     }
 
     /**
+     * @param $data
+     * @link https://api.flexmail.eu/documentation/#post-/opt-ins
+     */
+    public function optinContact($data)
+    {
+        return $this->sendRequest($this->baseUrl . '/opt-ins', $data, "POST");
+    }
+
+    /**
      * @return array|null
      * @link https://api.flexmail.eu/documentation/#get-/account-contact-languages
      */

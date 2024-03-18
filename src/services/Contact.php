@@ -26,7 +26,7 @@ class Contact extends Component
 
 
 
-    public function createOrUpdateContact($email, $language, $source = null, $firstName = null, $lastName = null, $customFields = [], $interests = [], $labels = [], $preferences = [])
+    public function createOrUpdateContact($email, $language, $source = null, $firstName = null, $lastName = null, $customFields = [], $interests = [], $labels = [], $preferences = [], int $optInFormId = 0)
     {
 //        TODO: Set default source in settings? Sources like lists?
         $fields = [
@@ -41,6 +41,13 @@ class Contact extends Component
         $response = $this->api->searchContactByEmail($email);
 
         if (!isset($response['data']['_embedded'])) {
+            if ($optInFormId) {
+                unset($fields['source']);
+                $optinFields = array_merge($fields, ['opt_in_form_id' => $optInFormId]);
+                $body = Json::encode(array_filter($optinFields));
+                $response = $this->api->optinContact($body);
+                return true;
+            }
             $body = Json::encode(array_filter($fields));
             $response = $this->api->addContact($body);
             if(!isset($response['data']['_embedded'])) {

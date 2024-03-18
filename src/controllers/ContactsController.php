@@ -36,6 +36,8 @@ class ContactsController extends Controller
         $labels = $request->getBodyParam('labels', []);
         $preferences = $request->getBodyParam('preferences', []);
 
+        $optInFormId = $request->getBodyParam('optInFormId');
+
         try {
             $response = Flexmail::$plugin->contact->createOrUpdateContact(
                 $email,
@@ -46,7 +48,8 @@ class ContactsController extends Controller
                 $fields,
                 $interests,
                 $labels,
-                $preferences
+                $preferences,
+                $optInFormId
             );
             if ($request->isJson) {
                 return $this->asJson([
