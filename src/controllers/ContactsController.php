@@ -17,6 +17,66 @@ class ContactsController extends Controller
         $this->verifySettings();
 
         $request = Craft::$app->getRequest();
+
+        $captcha = $request->getBodyParam('captcha', false);
+        if ($captcha) {
+            switch ($captcha) {
+                case 'hCaptcha':
+                    if (empty($_POST['h-captcha-response'])) {
+                        return null;
+                    }
+
+                    $data = [
+                        'secret' => getenv("HCAPTCHA_SECRET"),
+                        'response' => $_POST['h-captcha-response']
+                    ];
+                    $verify = curl_init();
+                    curl_setopt($verify, CURLOPT_URL,   "https://hcaptcha.com/siteverify");
+                    curl_setopt($verify, CURLOPT_POST, true);
+                    curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
+                    curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
+                    $verifyResponse = curl_exec($verify);
+                    $responseData = json_decode($verifyResponse);
+
+                    if (!$responseData->success) {
+                        return null;
+                    }
+                    break;
+
+                case 'reCaptcha':
+                    if (empty($_POST['g-recaptcha-response'])) {
+                        return null;
+                    }
+
+                    $url = 'https://www.google.com/recaptcha/api/siteverify';
+                    $data = [
+                        'secret'   => getenv("RECAPTCHA_SECRET_KEY"),
+                        'response' => $_POST['g-recaptcha-response'],
+                        'remoteip' => $_SERVER['REMOTE_ADDR']
+                    ];
+
+                    $options = [
+                        'http' => [
+                            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                            'method'  => 'POST',
+                            'content' => http_build_query($data)
+                        ]
+                    ];
+
+                    $context  = stream_context_create($options);
+                    $result = file_get_contents($url, false, $context);
+
+                    if (!json_decode($result)->success) {
+                        return null;
+                    }
+                    break;
+
+                default:
+
+            }
+        }
+
+
         $email = $request->getRequiredBodyParam('email');
         $firstName = $request->getBodyParam('firstName', null);
         $lastName = $request->getBodyParam('lastName', null);

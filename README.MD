@@ -96,6 +96,26 @@ It's important to note that the values for these need to be **the ID of that ite
 
 Interests can be imported and refresh from the API through a Utility.
 
+## Captchas
+Currently, we only support hCaptcha and Google ReCaptcha verification. To use this functionality add a hidden input with name "captcha" and value "hCaptcha" or "reCaptcha". You also need an ``HCAPTCHA_SECRET`` or ``RECAPTCHA_SECRET_KEY`` .env variable.
+
+`````html
+ <form method="post">
+        {{ csrfInput() }}
+        {{ actionInput('flexmail/contacts/add') }}
+    
+        {{ hiddenInput('captcha', 'hCaptcha') }}
+        {{ hiddenInput('captcha', 'reCaptcha') }}
+        
+        <div>
+            <label for="email">E-mail</label>
+            <input type="email" name="email" id="email">
+        </div>
+
+        <input type="submit" value="Subscribe">
+    </form>
+`````
+
 ## Fields
 
 The plugin includes fields for interests that are defined in your Flexmail account.
