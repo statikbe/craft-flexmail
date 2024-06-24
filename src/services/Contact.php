@@ -28,9 +28,9 @@ class Contact extends Component
 
     public function createOrUpdateContact($email, $language, $source = null, $firstName = null, $lastName = null, $customFields = [], $interests = [], $labels = [], $preferences = [])
     {
-//        TODO: Set default source in settings? Sources like lists?
+        //        TODO: Set default source in settings? Sources like lists?
         $fields = [
-            'email' => $email,
+            'email' => strtolower($email), // INFO: flexmail does not accept uppercase email addresses
             'first_name' => $firstName ?? null,
             'name' => $lastName ?? null,
             'language' => $language,
@@ -86,10 +86,11 @@ class Contact extends Component
                         $contact[$key][$k] = $data[$key][$k];
                     }
                 }
-            } else if (isset($data[$key]) && $data[$key]) {
+            } elseif (isset($data[$key]) && $data[$key]) {
                 $contact[$key] = $data[$key];
             }
         }
         return $contact;
     }
 }
+
