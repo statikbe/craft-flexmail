@@ -131,7 +131,7 @@ class Api extends Component
         return Craft::$app->getCache()->getOrSet(
             "plugin_flexmail_interests",
             function() {
-                $url = $this->baseUrl . '/interests';
+                $url = $this->baseUrl . '/interests?limit=500';
                 return $this->sendRequest($url);
             },
             216000
