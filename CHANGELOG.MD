@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## 3.1.1 - 2024-11-22
+## Fixed
+- Fix macos filename issue with different case
+
 ## 3.1.0 - 2024-11-22
 ## Fixed
 - Change the limit of getInterests() from the default 25 to the maximum of 500
