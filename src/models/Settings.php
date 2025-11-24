@@ -13,7 +13,7 @@ class Settings extends Model
 
     public int $defaultSource = 0;
 
-    public function rules(): array
+    protected function defineRules(): array
     {
         $rules = parent::defineRules();
         $rules[] = [['apiUsername', 'apiToken'], 'required'];

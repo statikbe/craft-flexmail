@@ -70,17 +70,22 @@ class Flexmail extends Plugin
             }
         );
 
-        Event::on(Utilities::class, Utilities::EVENT_REGISTER_UTILITY_TYPES,
+        Event::on(Utilities::class, Utilities::EVENT_REGISTER_UTILITIES,
             function(RegisterComponentTypesEvent $event) {
                 $event->types[] = FlexmailUtility::class;
             }
         );
+    }
 
-        $this->setComponents([
-            'api' => Api::class,
-            'contact' => Contact::class,
-            'interests' => Interests::class
-        ]);
+    public static function config(): array
+    {
+        return [
+            'components' => [
+                'api' => Api::class,
+                'contact' => Contact::class,
+                'interests' => Interests::class,
+            ],
+        ];
     }
 
     // Protected Methods
