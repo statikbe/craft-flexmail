@@ -2,6 +2,10 @@
 
 This plugin integrates the [Flexmail REST API](https://api.flexmail.eu/documentation/#overview) into Craft CMS. The first version will focus on adding contacts, and assigning preferences & interests.
 
+## Requirements
+
+- Craft CMS 5.0.0 or later
+
 ## Installation
 
 To install the plugin, follow these instructions:
@@ -72,11 +76,12 @@ For example ``fields[city]``, where "city" is the handle of the custom field in 
 </form>
 `````
 
-### Subscribe form with  interests
-Flexmail is 2 ways to segment or add metadata to contacts: interests.
-These can be added by using ``labels[]`` and ``preferencs[]`` respectivly. 
+### Subscribe form with interests
+To segment or add metadata to contacts in Flexmail use ``interests[]``.
 
 It's important to note that the values for these need to be **the ID of that item in Flexmail**.
+
+> **Note:** The older `labels[]` and `preferences[]` fields are deprecated as of v3.0.0 and should not be used. Please use `interests[]` instead.
 
 `````html
  <form method="post">
