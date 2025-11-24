@@ -12,7 +12,6 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Header;
 use GuzzleHttp\Psr7\Request;
 use statikbe\flexmail\Flexmail;
-use statikbe\flexmail\models\Contact;
 use Craft;
 
 class Api extends Component
