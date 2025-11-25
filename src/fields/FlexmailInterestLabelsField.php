@@ -15,7 +15,7 @@ class FlexmailInterestLabelsField extends Dropdown
     /**
      * @inheritdoc
      */
-    public bool $optgroups = false;
+    protected static bool $optgroups = true;
 
     public static function displayName(): string
     {
